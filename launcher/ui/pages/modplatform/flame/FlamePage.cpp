@@ -132,7 +132,7 @@ void FlamePage::onSelectionChanged(QModelIndex curr, QModelIndex prev)
         auto netJob = new NetJob(QString("Flame::PackVersions(%1)").arg(current.name), APPLICATION->network());
         auto response = new QByteArray();
         int addonId = current.addonId;
-        netJob->addNetAction(Net::Download::makeByteArray(QString("https://api.curseforge.com/v1/mods/%1/files").arg(addonId), response));
+        netJob->addNetAction(Net::Download::makeByteArray(QString("https://api.curse.tools/v1/cf/mods/%1/files").arg(addonId), response));
 
         QObject::connect(netJob, &NetJob::succeeded, this, [this, response, addonId, curr] {
             if (addonId != current.addonId) {

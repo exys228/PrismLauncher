@@ -157,7 +157,7 @@ void ListModel::performPaginatedSearch()
 {
     NetJob* netJob = new NetJob("Flame::Search", APPLICATION->network());
     auto searchUrl = QString(
-                         "https://api.curseforge.com/v1/mods/search?"
+                         "https://api.curse.tools/v1/cf/mods/search?"
                          "gameId=432&"
                          "classId=4471&"
                          "index=%1&"

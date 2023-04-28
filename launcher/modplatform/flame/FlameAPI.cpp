@@ -22,7 +22,7 @@ auto FlameAPI::matchFingerprints(const QList<uint>& fingerprints, QByteArray* re
     QJsonDocument body(body_obj);
     auto body_raw = body.toJson();
 
-    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curseforge.com/v1/fingerprints"), response, body_raw));
+    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curse.tools/v1/cf/fingerprints"), response, body_raw));
 
     QObject::connect(netJob, &NetJob::finished, [response] { delete response; });
 
@@ -37,7 +37,7 @@ auto FlameAPI::getModFileChangelog(int modId, int fileId) -> QString
     auto* netJob = new NetJob(QString("Flame::FileChangelog"), APPLICATION->network());
     auto* response = new QByteArray();
     netJob->addNetAction(Net::Download::makeByteArray(
-        QString("https://api.curseforge.com/v1/mods/%1/files/%2/changelog")
+        QString("https://api.curse.tools/v1/cf/mods/%1/files/%2/changelog")
             .arg(QString::fromStdString(std::to_string(modId)), QString::fromStdString(std::to_string(fileId))),
         response));
 
@@ -75,7 +75,7 @@ auto FlameAPI::getModDescription(int modId) -> QString
     auto* netJob = new NetJob(QString("Flame::ModDescription"), APPLICATION->network());
     auto* response = new QByteArray();
     netJob->addNetAction(Net::Download::makeByteArray(
-        QString("https://api.curseforge.com/v1/mods/%1/description")
+        QString("https://api.curse.tools/v1/cf/mods/%1/description")
             .arg(QString::number(modId)), response));
 
     QObject::connect(netJob, &NetJob::succeeded, [netJob, response, &description] {
@@ -176,7 +176,7 @@ auto FlameAPI::getProjects(QStringList addonIds, QByteArray* response) const -> 
     QJsonDocument body(body_obj);
     auto body_raw = body.toJson();
 
-    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curseforge.com/v1/mods"), response, body_raw));
+    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curse.tools/v1/cf/mods"), response, body_raw));
 
     QObject::connect(netJob, &NetJob::finished, [response, netJob] { delete response; netJob->deleteLater(); });
     QObject::connect(netJob, &NetJob::failed, [body_raw] { qDebug() << body_raw; });
@@ -199,7 +199,7 @@ auto FlameAPI::getFiles(const QStringList& fileIds, QByteArray* response) const 
     QJsonDocument body(body_obj);
     auto body_raw = body.toJson();
 
-    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curseforge.com/v1/mods/files"), response, body_raw));
+    netJob->addNetAction(Net::Upload::makeByteArray(QString("https://api.curse.tools/v1/cf/mods/files"), response, body_raw));
 
     QObject::connect(netJob, &NetJob::finished, [response, netJob] { delete response; netJob->deleteLater(); });
     QObject::connect(netJob, &NetJob::failed, [body_raw] { qDebug() << body_raw; });
